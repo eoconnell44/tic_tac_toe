@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css?family=Just+Another+Hand" rel="stylesheet">
+</head>
+
+<style>
+	body {
+		font-family: 'Just Another Hand', cursive;
+	}
+	header {
+    border: 1px solid rgba(76, 77, 75, 0.9);
+    background-color: rgba(76, 77, 75, 0.9);
+	}
+	h1 {
+    font-size: 75px;
+    text-align: center;
+    color: whitesmoke;
+    letter-spacing: 10px;
+	}
+	#btn {
+    background-color: red;
+    color: white;
+    height: 50px;
+    width: 110px;
+    font-size: 18px;
+    margin: 5px auto;
+	}
+	.board{
+		max-width: 450px;
+    margin: 5% auto;
+	}
+	.rows{
+		display: flex;
+	}
+	.spacex {
+	border: 2px solid black;
+	height: 150px;
+	width: 200px;
+	text-align: center;
+	margin: 2px;
+	padding: 2px;
+	font-size: 125px;
+	}
+	#displayWinner {
+	margin: auto;
+	display: table;
+	font-size: 40px;
+	}
+</style>
+<body>
+<header>
+	<h1>Tic Tac Toe</h1>
+</header>
+	
+
+<div>
+	<button id='btn'>New Game</button> </div>
+<div id='displayWinner'></div>
+<div class='board'>
+	<div class='rows'>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+	</div>
+	<div class='rows'>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+	</div>
+	<div class='rows'>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+		<div class='spacex'></div>
+	</div>
+	</div>
+<script>
+	const game = {
+		clicked: true,
+		board: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+		currentMove: 'X',
+		playCount: 0,
+		checkWinner: function() {
+    if (((this.board[0] === this.board [1]) && this.board[1] === this.board[2])
+      || ((this.board[3] === this.board [4]) && this.board[4] === this.board[5])
+      || ((this.board[6] === this.board [7]) && this.board[7] === this.board[8])
+      || ((this.board[0] === this.board [3]) && this.board[3] === this.board[6])
+      || ((this.board[1] === this.board [4]) && this.board[4] === this.board[7])
+      || ((this.board[2] === this.board [5]) && this.board[5] === this.board[8])
+      || ((this.board[0] === this.board [4]) && this.board[4] === this.board[8])
+      || ((this.board[2] === this.board [4]) && this.board[4] === this.board[6])) {
+        document.querySelector('#displayWinner').innerHTML = `Player ${this.currentMove} has won!`;
+        this.clicked = false;
+
+      } else if(this.playCount===9){
+         document.querySelector('#displayWinner').innerHTML = `It's a tie`;
+        this.clicked = false;
+      }
+  	},
+	}
+const blocks = document.querySelectorAll('.spacex');
+	blocks.forEach((block, index) => {
+		block.setAttribute('id', index)
+		block.addEventListener('click', playerMove)
+
+			function playerMove() {
+			game.playCount += 1;
+			if(game.clicked){
+				block.innerHTML = game.currentMove;
+				game.board[index] = game.currentMove;
+				game.checkWinner();
+
+				game.currentMove = game.currentMove === 'X' ? 'O' : 'X';
+
+				block.removeEventListener('click', playerMove);
+			} else {
+			block.removeEventListener('click', playerMove);
+			alert(`That's all she wrote!`)
+		}
+	};
+});
+	resetGame = () => {
+		location.reload();
+	}
+const btn = document.querySelector('#btn');
+	btn.addEventListener('click', resetGame)	
+		
+	</script>
+</body>
+</html>
